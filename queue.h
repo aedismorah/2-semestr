@@ -18,16 +18,16 @@ public:
     link *h = &head;
     while (  h->next != nullptr) 
     {
-        h = h->next;         //тут происходит шаг по элементам
+        h = h->next;         //
     }
-    h->next = l;  //тут кладется залупа в пупу
+    h->next = l;  //
     }
 
     int dequeue()          //pop(?)
     {
         if(head.next != nullptr)
         {    
-            int ret = head.next -> val;  //неясно
+            int ret = head.next -> val;  //
             link *old = head.next;
             head.next = head.next -> next;
             delete old;
