@@ -11,13 +11,13 @@ public:
     int size_w;
     double price; 
     
-    void setData(int x,int y)
+    void setData(int x,int y)//в хедерах должны быть декларации. для инициализации обычно используют файл с тем же названием, что и хедер, но с расширением .с или .срр
     {
     size_h=x;
     size_w=y;
     }
     
-    void getData()
+    void getData() const
     {
         cout <<"NAME: "<< brand_name << endl;
         cout << "HIGH: " << size_h << endl;
