@@ -25,7 +25,7 @@ int main()
 
     int j = 0;
     set<string> ans;
-    for (int i = 0; i < N; i++) {
+    for (int i = 0; i < N + 1; i++) {
         for (auto num : a) {
             if (i > 1) {
                 if (num.second == i) {
@@ -33,16 +33,18 @@ int main()
                     {
                         if (dl.find(i - k) != dl.end()) {
                             string s1, s2, s3, s4;
-                            s1 = num.first.substr(0, i);
-                            s2 = num.first.substr(i);
-                            s3 = num.first.substr(0, k);
-                            s4 = num.first.substr(k);
+                            s1 = num.first.substr(0, k);
+                            s2 = num.first.substr(k);
+                            s3 = num.first.substr(0, i - k);
+                            s4 = num.first.substr(i - k);
                             if (((a.find(s1) != a.end()) && (a.find(s2) != a.end())) || ((a.find(s3) != a.end()) && (a.find(s4) != a.end()))) {
                                 if (ans.find(num.first) == ans.end())
                                 {
                                 ans.insert(num.first);
-                                break;
+                                j++;
+                              //  break;
                                 }
+                              \
                             }
                         }
                     }
@@ -56,4 +58,5 @@ int main()
     for (auto num : ans) {
         cout << num << endl;
     }
+ //   cout << j << endl;
 }
