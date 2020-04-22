@@ -41,7 +41,7 @@ int main()
                                 if (ans.find(num.first) == ans.end())
                                 {
                                 ans.insert(num.first);
-                                j++;
+                                break;
                                 }
                             }
                         }
