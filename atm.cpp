@@ -32,21 +32,24 @@ public:
     {
         vector<unsigned> fnote;
         unsigned int A = amount ;
-                        sort(cur_notes[currency].begin(), cur_notes[currency].end(), [](int x, int y) { return x > y; });
+        sort(cur_notes[currency].begin(), cur_notes[currency].end(), [](int x, int y) { return x > y; });
 
-                        for(unsigned i = 0; i < cur_notes[currency].size(); ++i)
-                        {
-                            if(  A > 0)
-                            {A =A - cur_notes[currency][i];
-                               fnote.push_back(cur_notes[currency][i]);}
-                        }
+        for(unsigned i = 0; i < cur_notes[currency].size() && A > 0; ++i)
+        {
+            if(A > cur_notes[currency][i]) // типо если сумма 1000б а первая купюра 5000
+            {
+                A -= cur_notes[currency][i];
+               fnote.push_back(cur_notes[currency][i]);
+            }
+        }
 
-                        if(A == 0)
-                        {fnote.clear();}
+        if(A == 0)//у тебя наоборот если А == 0 все хорошо, выдаем купюры
+            cur_notes[currency].erase(cur_notes[currency].begin(), cur_notes[currency] + fnote.size());
+        else
+            fnote.clear();
 
-
-
-                        return fnote;
+        return fnote;
+        //withdraw small фиксится аналогично
     }
 
     // Снять сумму amount в валюте currency, выдав её максимально мелкими купюрами
@@ -78,9 +81,7 @@ public:
     {
         unsigned int sum = 0;
         for(unsigned i = 0; i < cur_notes[currency].size(); ++i)
-        {
-        sum = sum + cur_notes[currency][i];
-        }
+            sum = sum + cur_notes[currency][i];
         return sum;
     }
 };
