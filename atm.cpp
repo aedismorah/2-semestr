@@ -49,7 +49,7 @@ public:
                            cur_notes[currency].erase(cur_notes[currency].begin() + num);}
         else
 
-            fnote.clear();
+        {fnote.clear();sterto.clear();}
 
         return fnote;
     }
@@ -78,7 +78,7 @@ public:
                           cur_notes[currency].erase(cur_notes[currency].begin() + num);}
        else
 
-           fnote.clear();
+       {fnote.clear();sterto.clear();}
 
        return fnote;
     }
