@@ -7,89 +7,98 @@ using namespace std;
 class ATM {
 
 private:
+
     vector<unsigned> cur_notes[3];
 
 public:
+
     ATM() {}
+
 
     void deposit(const vector<unsigned int>& notes, unsigned short int currency) //: note(notes), curren(currency){}
     {
-        for (int num : notes)
+        for (int num : notes)   cur_notes[currency].push_back(num);
+
     }
+
 
     vector<unsigned int> withdraw_large(unsigned int amount, unsigned short int currency)
     {
         vector<unsigned> fnote;
         vector<unsigned> sterto;
-        vector<unsigned> new_cur_notes;
+         vector<unsigned> new_cur_notes;
         unsigned int A = amount;
         sort(cur_notes[currency].begin(), cur_notes[currency].end(), [](int x, int y) { return x > y; });
 
-        for (unsigned i = 0; i < cur_notes[currency].size(); ++i) {
+      \
 
-            if ((A >= cur_notes[currency][i]) && (A > 0)) {
+        for (unsigned i = 0; i < cur_notes[currency].size(); ++i)
+        {
 
-                A -= cur_notes[currency][i];
-                sterto.push_back(i);
+
+                  if ((A >= cur_notes[currency][i]) && (A > 0))
+                  {
+
+                      A -= cur_notes[currency][i];
+                 sterto.push_back(i);
                 fnote.push_back(cur_notes[currency][i]);
             }
             else
-                new_cur_notes.push_back(cur_notes[currency][i]);
+                           new_cur_notes.push_back(cur_notes[currency][i]);
         }
-        if (A == 0) {
-            cur_notes[currency].erase(cur_notes[currency].begin(), cur_notes[currency].begin() + fnote.size());
-            for (int i = 0; i < cur_notes[currency].size(); ++i) {
+        if (A == 0)
+           { //cur_notes[currency].erase(cur_notes[currency].begin(), cur_notes[currency].begin() + fnote.size());
+            for(int i = 0; i <cur_notes[currency].size(); ++i)
+            {
                 vector<unsigned>::iterator it = find(sterto.begin(), sterto.end(), i);
-                if (it == sterto.end())
-                    new_cur_notes.push_back(cur_notes[currency][i]);
+                if(it == sterto.end()) new_cur_notes.push_back(cur_notes[currency][i]);
             }
-            cur_notes[currency] = new_cur_notes;
-            return fnote;
+            cur_notes[currency] = new_cur_notes; return fnote;
         }
-        //  cur_notes[currency] = new_cur_notes;
+          //  cur_notes[currency] = new_cur_notes;
         else
 
-        {
-            fnote.clear();
-            return fnote;
-        }
+        {    fnote.clear();return fnote;}
+
+
     }
+
 
     vector<unsigned int> withdraw_small(unsigned int amount, unsigned short int currency)
     {
         vector<unsigned> fnote;
-        vector<unsigned> sterto;
-        vector<unsigned> new_cur_notes;
-        unsigned int A = amount;
-        sort(cur_notes[currency].begin(), cur_notes[currency].end(), [](int x, int y) { return x < y; });
-        //cout << cur_notes[currency].size();
-        for (unsigned i = 0; i < cur_notes[currency].size(); ++i) {
-            // cout <<"-"<< cur_notes[currency][i]<<"-"<<endl;
-            if ((A >= cur_notes[currency][i]) && (A > 0)) {
+               vector<unsigned> sterto;
+               vector<unsigned> new_cur_notes;
+               unsigned int A = amount;
+               sort(cur_notes[currency].begin(), cur_notes[currency].end(), [](int x, int y) { return x < y; });
+//cout << cur_notes[currency].size();
+               for (unsigned i = 0; i < cur_notes[currency].size(); ++i) {
+                    // cout <<"-"<< cur_notes[currency][i]<<"-"<<endl;
+                   if ((A >= cur_notes[currency][i]) && (A > 0)) {
 
-                A -= cur_notes[currency][i];
-                sterto.push_back(i);
-                //     cout << cur_notes[currency][i]<<" ";
-                fnote.push_back(cur_notes[currency][i]);
-            }
-            else
-                new_cur_notes.push_back(cur_notes[currency][i]);
-        }
-        if (A == 0) {
-            cur_notes[currency].erase(cur_notes[currency].begin(), cur_notes[currency].begin() + fnote.size());
-            for (int i = 0; i < cur_notes[currency].size(); ++i) {
-                vector<unsigned>::iterator it = find(sterto.begin(), sterto.end(), i);
-                if (it == sterto.end())
-                    new_cur_notes.push_back(cur_notes[currency][i]);
-            }
-            cur_notes[currency] = new_cur_notes;
-            return fnote;
-        }
-        else
+                       A -= cur_notes[currency][i];
+                        sterto.push_back(i);
+                   //     cout << cur_notes[currency][i]<<" ";
+                       fnote.push_back(cur_notes[currency][i]);
+                   }
+                   else
+                       new_cur_notes.push_back(cur_notes[currency][i]);
+               }
+               if (A == 0)
+                  { //cur_notes[currency].erase(cur_notes[currency].begin(), cur_notes[currency].begin() + fnote.size());
+                   for(int i = 0; i <cur_notes[currency].size(); ++i)
+                   {
+                       vector<unsigned>::iterator it = find(sterto.begin(), sterto.end(), i);
+                       if(it == sterto.end()) new_cur_notes.push_back(cur_notes[currency][i]);
+                   }
+                   cur_notes[currency] = new_cur_notes; return fnote;
+               }
+               else
 
-            fnote.clear();
 
-        return fnote;
+                   fnote.clear();
+
+               return fnote;
     }
 
     // Вернуть максимальную сумму, доступную в валюте currency
