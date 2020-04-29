@@ -9,7 +9,7 @@ class ATM {
 private:
     //  vector<unsigned int> note;
     //unsigned short int curren;
-   vector<unsigned> cur_notes[3];
+    vector<unsigned> cur_notes[3];
 
 public:
     // Конструктор, создаёт пустой банкомат
@@ -22,7 +22,8 @@ public:
     // - в поле currency указан код валюты
     void deposit(const vector<unsigned int>& notes, unsigned short int currency) //: note(notes), curren(currency){}
     {
-       for(int num : notes) cur_notes[currency].push_back(num);
+        for (int num : notes)
+            cur_notes[currency].push_back(num);
     }
 
     // Снять сумму amount в валюте currency, выдав её максимально крупными купюрами
@@ -31,22 +32,21 @@ public:
     vector<unsigned int> withdraw_large(unsigned int amount, unsigned short int currency)
     {
         vector<unsigned> fnote;
-        unsigned int A = amount ;
-                        sort(cur_notes[currency].begin(), cur_notes[currency].end(), [](int x, int y) { return x > y; });
+        unsigned int A = amount;
+        sort(cur_notes[currency].begin(), cur_notes[currency].end(), [](int x, int y) { return x > y; });
 
-                        for(unsigned i = 0; i < cur_notes[currency].size(); ++i)
-                        {
-                            if(  A > 0)
-                            {A =A - cur_notes[currency][i];
-                               fnote.push_back(cur_notes[currency][i]);}
-                        }
+        for (unsigned i = 0; i < cur_notes[currency].size(); ++i) {
+            if ((A >= cur_notes[currency][i]) && (A > 0)) {
+                A = A - cur_notes[currency][i];
+                fnote.push_back(cur_notes[currency][i]);
+            }
+        }
+        if (A == 0)
+            cur_notes[currency].erase(cur_notes[currency].begin(), cur_notes[currency].begin() + fnote.size());
+        else
+            fnote.clear();
 
-                        if(A == 0)
-                        {fnote.clear();}
-
-
-
-                        return fnote;
+        return fnote;
     }
 
     // Снять сумму amount в валюте currency, выдав её максимально мелкими купюрами
@@ -55,31 +55,30 @@ public:
     vector<unsigned int> withdraw_small(unsigned int amount, unsigned short int currency)
     {
         vector<unsigned> fnote;
-        unsigned int A =amount;
-                        sort(cur_notes[currency].begin(), cur_notes[currency].end(), [](int x, int y) { return x < y; });
+        unsigned int A = amount;
+        sort(cur_notes[currency].begin(), cur_notes[currency].end(), [](int x, int y) { return x < y; });
 
-                        for(unsigned i = 0; i < cur_notes[currency].size(); ++i)
-                        {
-                            if(  A > 0)
-                            {A =A - cur_notes[currency][i];
-                               fnote.push_back(cur_notes[currency][i]);}
-                        }
+        for (unsigned i = 0; i < cur_notes[currency].size(); ++i) {
+            if ((A >=cur_notes[currency][i]) && (A > 0)) {
+                A = A - cur_notes[currency][i];
+                fnote.push_back(cur_notes[currency][i]);
+            }
+        }
 
-                        if(A != 0)
-                        {fnote.clear();}
+        if (A == 0)
+            cur_notes[currency].erase(cur_notes[currency].begin(), cur_notes[currency].begin() + fnote.size());
+        else
+            fnote.clear();
 
-
-
-                        return fnote;
+        return fnote;
     }
 
     // Вернуть максимальную сумму, доступную в валюте currency
     unsigned int check_reserve(unsigned short int currency)
     {
         unsigned int sum = 0;
-        for(unsigned i = 0; i < cur_notes[currency].size(); ++i)
-        {
-        sum = sum + cur_notes[currency][i];
+        for (unsigned i = 0; i < cur_notes[currency].size(); ++i) {
+            sum = sum + cur_notes[currency][i];
         }
         return sum;
     }
