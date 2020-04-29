@@ -1,6 +1,5 @@
 #include <vector>
 #include <algorithm>
-#include <map>
 #include <iostream>
 using namespace std;
 
@@ -85,17 +84,8 @@ public:
                        new_cur_notes.push_back(cur_notes[currency][i]);
                }
                if (A == 0)
-                  { //cur_notes[currency].erase(cur_notes[currency].begin(), cur_notes[currency].begin() + fnote.size());
-                   for(int i = 0; i <cur_notes[currency].size(); ++i)
-                   {
-                       vector<unsigned>::iterator it = find(sterto.begin(), sterto.end(), i);
-                       if(it == sterto.end()) new_cur_notes.push_back(cur_notes[currency][i]);
-                   }
-                   cur_notes[currency] = new_cur_notes; return fnote;
-               }
+                   cur_notes[currency] = new_cur_notes;
                else
-
-
                    fnote.clear();
 
                return fnote;
