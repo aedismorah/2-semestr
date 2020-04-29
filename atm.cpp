@@ -73,7 +73,7 @@ public:
                sort(cur_notes[currency].begin(), cur_notes[currency].end(), [](int x, int y) { return x < y; });
 //cout << cur_notes[currency].size();
                for (unsigned i = 0; i < cur_notes[currency].size(); ++i) {
-                    // cout <<"-"<< cur_notes[currency][i]<<"-"<<endl;
+                   // cout <<"-"<< cur_notes[currency][i]<<"-"<<endl;
                    if ((A >= cur_notes[currency][i]) && (A > 0)) {
 
                        A -= cur_notes[currency][i];
@@ -99,6 +99,13 @@ public:
                    fnote.clear();
 
                return fnote;
+    }
+    void Log(unsigned  currency)
+    {
+        for(int i = 0; i <cur_notes[currency].size(); ++i)
+        {
+            cout<<cur_notes[currency][i]<<" ";
+        }
     }
 
     // Вернуть максимальную сумму, доступную в валюте currency
@@ -131,21 +138,29 @@ int main()
         cout << "Currency " << code << ": " << atm.check_reserve(code) << endl;
     }
 
+
     vector<unsigned int> result;
     result = atm.withdraw_large(1000, RUB);
-    cout << "Asked withdraw_large for 1000 RUB, got " << result.size() << " banknotes" << endl;
+    for (auto res : result)
+    {
+        cout<<res<<", "<<endl;
+    }
+    cout<< endl;
+    atm.Log(RUB);
+    cout <<endl;
+   // cout << "Asked withdraw_large for 1000 RUB, got " << result.size() << " banknotes" << endl;
     //  for(auto num : result) cout << num<< "o";
 
     result = atm.withdraw_small(1000, RUB);
-    cout << "Asked withdraw_small for 1000 RUB, got " << result.size() << " banknotes" << endl;
+  //  cout << "Asked withdraw_small for 1000 RUB, got " << result.size() << " banknotes" << endl;
 
     result = atm.withdraw_small(1000, USD);
-    cout << "Asked withdraw_small for 1000 USD, got " << result.size() << " banknotes" << endl;
+ //   cout << "Asked withdraw_small for 1000 USD, got " << result.size() << " banknotes" << endl;
 
     result = atm.withdraw_large(3, NCC);
-    cout << "Asked withdraw_large for 3 NCC, got " << result.size() << " banknotes" << endl;
+ //   cout << "Asked withdraw_large for 3 NCC, got " << result.size() << " banknotes" << endl;
 
-    cout << "Reserves: " << endl;
+  //  cout << "Reserves: " << endl;
     for (unsigned short int code = 0; code <= 2; code++) {
         cout << "Currency " << code << ": " << atm.check_reserve(code) << endl;
     }
