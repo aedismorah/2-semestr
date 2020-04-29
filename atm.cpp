@@ -32,24 +32,23 @@ public:
     vector<unsigned int> withdraw_large(unsigned int amount, unsigned short int currency)
     {
         vector<unsigned> fnote;
-        vector<unsigned> sterto;
+        vector<unsigned> new_cur_notes;
         unsigned int A = amount;
         sort(cur_notes[currency].begin(), cur_notes[currency].end(), [](int x, int y) { return x > y; });
 
         for (unsigned i = 0; i < cur_notes[currency].size(); ++i) {
             if ((A >= cur_notes[currency][i]) && (A > 0)) {
-                A = A - cur_notes[currency][i];
+                A -= cur_notes[currency][i];
                  sterto.push_back(i);
                 fnote.push_back(cur_notes[currency][i]);
             }
+            else
+                new_cur_notes.push_back(cur_notes[currency][i]);
         }
         if (A == 0)
-           { cur_notes[currency].erase(cur_notes[currency].begin(), cur_notes[currency].begin() + fnote.size());
-            for(auto num : sterto)
-                           cur_notes[currency].erase(cur_notes[currency].begin() + num);}
+            cur_notes = new_cur_notes;
         else
-
-        {fnote.clear();sterto.clear();}
+            fnote.clear();
 
         return fnote;
     }
