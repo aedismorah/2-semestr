@@ -32,18 +32,23 @@ public:
     vector<unsigned int> withdraw_large(unsigned int amount, unsigned short int currency)
     {
         vector<unsigned> fnote;
+        vector<unsigned> sterto;
         unsigned int A = amount;
         sort(cur_notes[currency].begin(), cur_notes[currency].end(), [](int x, int y) { return x > y; });
 
         for (unsigned i = 0; i < cur_notes[currency].size(); ++i) {
             if ((A >= cur_notes[currency][i]) && (A > 0)) {
                 A = A - cur_notes[currency][i];
+                 sterto.push_back(i);
                 fnote.push_back(cur_notes[currency][i]);
             }
         }
         if (A == 0)
-            cur_notes[currency].erase(cur_notes[currency].begin(), cur_notes[currency].begin() + fnote.size());
+           { cur_notes[currency].erase(cur_notes[currency].begin(), cur_notes[currency].begin() + fnote.size());
+            for(auto num : sterto)
+                           cur_notes[currency].erase(cur_notes[currency].begin() + num);}
         else
+
             fnote.clear();
 
         return fnote;
@@ -56,21 +61,26 @@ public:
     {
         vector<unsigned> fnote;
         unsigned int A = amount;
+         vector<unsigned> sterto;
         sort(cur_notes[currency].begin(), cur_notes[currency].end(), [](int x, int y) { return x < y; });
 
         for (unsigned i = 0; i < cur_notes[currency].size(); ++i) {
             if ((A >=cur_notes[currency][i]) && (A > 0)) {
                 A = A - cur_notes[currency][i];
                 fnote.push_back(cur_notes[currency][i]);
-            }
-        }
+                sterto.push_back(i);
 
-        if (A == 0)
-            cur_notes[currency].erase(cur_notes[currency].begin(), cur_notes[currency].begin() + fnote.size());
-        else
-            fnote.clear();
+           }
+       }
+       if (A == 0)
+          { cur_notes[currency].erase(cur_notes[currency].begin(), cur_notes[currency].begin() + fnote.size());
+           for(auto num : sterto)
+                          cur_notes[currency].erase(cur_notes[currency].begin() + num);}
+       else
 
-        return fnote;
+           fnote.clear();
+
+       return fnote;
     }
 
     // Вернуть максимальную сумму, доступную в валюте currency
