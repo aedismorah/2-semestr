@@ -32,6 +32,7 @@ public:
     vector<unsigned int> withdraw_large(unsigned int amount, unsigned short int currency)
     {
         vector<unsigned> fnote;
+        vector<unsigned> erase_indeces;
         unsigned int A = amount;
         sort(cur_notes[currency].begin(), cur_notes[currency].end(), [](int x, int y) { return x > y; });
 
@@ -39,10 +40,12 @@ public:
             if ((A >= cur_notes[currency][i]) && (A > 0)) {
                 A = A - cur_notes[currency][i];
                 fnote.push_back(cur_notes[currency][i]);
+                erase_indeces.push_back(i);
             }
         }
         if (A == 0)
-            cur_notes[currency].erase(cur_notes[currency].begin(), cur_notes[currency].begin() + fnote.size());
+            for(unsigned index : erase_indeces)
+                cur_notes.erase(cur_notes.begin() + index);
         else
             fnote.clear();
 
